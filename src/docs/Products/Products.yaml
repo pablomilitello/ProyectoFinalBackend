@@ -1,0 +1,130 @@
+paths:
+  /api/products:
+    get:
+      summary: Returns a list of products
+      responses:
+        '200':
+          description: All products found
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+    post:
+      summary: Add products
+      responses:
+        '201':
+          description: Product created
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+    delete:
+      summary: Delete all products
+      responses:
+        '201':
+          description: Products deleted
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+  /api/products/{id}:
+    get:
+      summary: Get one product by id
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+      responses:
+        '200':
+          description: One product found
+          content:
+            aplication/json:
+              schemas:
+                $ref: '#/components/schemas/Product'
+              example:
+                id: 6473ba44e6e4b89c1b0b5ac7
+                title: shirt
+                description: white shirt medium
+                category: summer
+                price: 20
+                thumbnail: []
+                code: ABC0002
+                stock: 4
+                status: true
+                owner: admin
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+    put:
+      summary: Update product by id
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+      responses:
+        '201':
+          description: Product created
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+    delete:
+      summary: Delete product by id
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+      responses:
+        '201':
+          description: Product deleted
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Products
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: String,
+        description:
+          type: String,
+        category:
+          type: String,
+        price:
+          type: Number,
+        thumbnail:
+          type: Array,
+        code:
+          type: String,
+        stock:
+          type: Number,
+        status:
+          type: Boolean,
+        owner:
+          type: String,
+      example:
+        id: 6473ba44e6e4b89c1b0b5ac6
+        title: jeans
+        description: blue jeans medium
+        category: summer
+        price: 30
+        thumbnail: []
+        code: ABC0001
+        stock: 120
+        status: true
+        owner: admin

@@ -1,0 +1,104 @@
+paths:
+  /api/carts:
+    post:
+      summary: Add cart
+      responses:
+        '201':
+          description: Cart created
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Carts
+  /api/carts/{cid}:
+    get:
+      summary: Get one cart by id
+      parameters:
+        - name: id
+          in: path
+          description: Cart identifier
+      responses:
+        '200':
+          description: One cart found
+          content:
+            aplication/json:
+              schemas:
+                $ref: '#/components/schemas/Cart'
+              example:
+                id: 6473a916bab3945b465cb9b0
+                products:
+                  [
+                    { product: 6473ba44e6e4b89c1b0b5ac6, quantity: 100 },
+                    { product: 6473ba44e6e4b89c1b0b5ac7, quantity: 2 },
+                  ]
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Carts
+    put:
+      summary: Update cart by id
+      parameters:
+        - name: id
+          in: path
+          description: Cart identifier
+      responses:
+        '201':
+          description: Cart updated
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Carts
+    delete:
+      summary: Delete all products from cart
+      parameters:
+        - name: id
+          in: path
+          description: Cart identifier
+      responses:
+        '201':
+          description: All products deleted from cart
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Carts
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Add products to cart
+      parameters:
+        - name: cid
+          description: Cart identifier
+          in: path
+        - name: pid
+          description: Product identifier
+          in: path
+      responses:
+        '201':
+          description: Products added
+        '400':
+          description: Some data is missing
+        '500':
+          description: Server error
+      tags:
+        - Carts
+components:
+  schemas:
+    Cart:
+      type: array
+      items:
+        type: object
+        properties:
+          product:
+            type: Object,
+          quantity:
+            type: Number,
+      example:
+        id: 6473a916bab3945b465cb9b0
+        products:
+          [{ product: 6473ba44e6e4b89c1b0b5ac6, quantity: 100 }, { product: 6473ba44e6e4b89c1b0b5ac7, quantity: 2 }]
