@@ -91,3 +91,28 @@ export const uploadFiles = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await userManager.findAll();
+    if (users.length === 0) {
+      CustomError.createCustomError({
+        message: 'User not found',
+        status: 400,
+      });
+    }
+    const userDTOs = users.map((user) => new UsersDB_DTO(user));
+    res.json(userDTOs);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteInactiveUsers = async (req, res, next) => {
+  try {
+    const users = await userManager.findAll();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};

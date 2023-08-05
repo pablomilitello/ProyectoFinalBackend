@@ -15,4 +15,5 @@ export const ErrorMessage = {
   SESSION_EXPIRED: 'Session expired',
   MAIL_NOT_SEND: 'Mail not send',
   COULD_NOT_IMAGE: 'Could not save image',
+  USER_NOT_FOUND: 'User not found',
 };
