@@ -21,6 +21,18 @@ export default class UsersManager extends BasicManager {
       return null;
     }
   }
+
+  async deleteInactive() {
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+    try {
+      const result = await userModel.deleteMany({ last_connection: { $lt: oneHourAgo } });
+      return result;
+    } catch (err) {
+      console.error('Error al borrar usuarios inactivos:', err);
+      throw err;
+    }
+  }
 }
 
 export const userManager = new UsersManager(userModel);
