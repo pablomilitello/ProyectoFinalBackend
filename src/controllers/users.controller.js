@@ -110,3 +110,11 @@ export const deleteInactiveUsers = async (req, res, next) => {
     next(error);
   }
 };
+
+export const adminManager = async (req, res, next) => {
+  try {
+    res.render('adminManager');
+  } catch (error) {
+    next(error);
+  }
+};
