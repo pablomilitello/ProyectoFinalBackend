@@ -2,6 +2,11 @@ import UsersDB_DTO from '../DAL/DTOs/usersDB.dto.js';
 import { userManager } from '../DAL/DAOs/usersDaos/UsersManagerMongo.js';
 import { ROLE_ADMIN, ROLE_PREMIUM, ROLE_USER } from '../DAL/mongoDB/models/users.model.js';
 import CustomError from '../services/errors/CustomError.js';
+import hbs from 'nodemailer-express-handlebars';
+import path from 'path';
+import { transporter } from '../utils/nodemailer.js';
+import { logger } from '../utils/winston.js';
+import { __dirname } from '../utils/utils.js';
 
 export const register = (req, res) => {
   res.render('register');
@@ -104,7 +109,34 @@ export const getAllUsers = async (req, res, next) => {
 
 export const deleteInactiveUsers = async (req, res, next) => {
   try {
-    const users = await userManager.deleteInactive();
+    transporter.use(
+      'compile',
+      hbs({
+        viewEngine: {
+          extName: '.handlebars',
+          partialsDir: path.resolve(__dirname, 'views'),
+          defaultLayout: false,
+        },
+        viewPath: path.resolve(__dirname, 'views'),
+        extName: '.handlebars',
+      })
+    );
+
+    const users = await userManager.findAndDeleteInactive();
+    users.forEach((user) => {
+      const mail = {
+        from: 'coderhousemailer@gmail.com',
+        to: user.email,
+        subject: 'Account deleted',
+        template: 'accountDeleted',
+      };
+      transporter.sendMail(mail, (err, info) => {
+        if (err) {
+          logger.error(err);
+        }
+      });
+    });
+
     res.status(200).json(users);
   } catch (error) {
     next(error);
