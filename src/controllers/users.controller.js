@@ -145,7 +145,9 @@ export const deleteInactiveUsers = async (req, res, next) => {
 
 export const adminManager = async (req, res, next) => {
   try {
-    res.render('adminManager');
+    const users = await userManager.findAll();
+    const userDTOs = users.map((user) => new UsersDB_DTO(user));
+    res.render('roleUsers', { userDTOs });
   } catch (error) {
     next(error);
   }

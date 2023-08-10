@@ -1,0 +1,36 @@
+<h2>Admin Manager</h2>
+
+{{#if userDTOs.length}}
+
+  <h2 align='center'>List of existing users</h2>
+
+  <table class='table' id='table' cellPadding='10' border='1' align='center'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Mail</th>
+        <th>Role</th>
+        <th>Delete</th>
+        <th>Toggle user</th>
+      </tr>
+    </thead>
+    <tbody id='productsTable'>
+      {{#each userDTOs}}
+        <tr>
+          <td>{{firstName}}</td>
+          <td>{{lastName}}</td>
+          <td>{{email}}</td>
+          <td>{{role}}</td>
+          <td><button class='delete' data-email='{{email}}'>Delete</button></td>
+          <td><button class='toggleUser' data-email='{{role}}'>Toggle user</button></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <h2>No users found</h2>
+{{/if}}
+
+<script src='/socket.io/socket.io.js'></script>
+<script src='/js/index.js'></script>
