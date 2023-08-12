@@ -143,6 +143,15 @@ export const deleteInactiveUsers = async (req, res, next) => {
   }
 };
 
+export const deleteUser = async (req, res, next) => {
+  try {
+    const user = await userManager.findOneById(uid);
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const adminManager = async (req, res, next) => {
   try {
     const users = await userManager.findAll();

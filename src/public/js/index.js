@@ -1,7 +1,6 @@
 const socketClient = io();
 
 const addProduct = document.getElementById('addProduct');
-
 const inputTitle = document.getElementById('pTitle');
 const inputDescription = document.getElementById('pDescription');
 const inputCategory = document.getElementById('pCategory');
@@ -40,6 +39,41 @@ deleteProduct.addEventListener('click', async (e) => {
     try {
       await fetch(`/api/products/${productId}`, {
         method: 'DELETE',
+      });
+      document.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+});
+
+const deleteUser = document.getElementById('usersTable');
+deleteUser.addEventListener('click', async (e) => {
+  e.preventDefault();
+  console.log('HELLO');
+  // const element = e.target;
+  // const userId = element.getAttribute('data-id');
+  // if (element.className === 'delete') {
+  //   try {
+  //     await fetch(`/api/users/${userId}`, {
+  //       method: 'DELETE',
+  //     });
+  //     document.location.reload();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+});
+
+const ToggleUserToPremium = document.getElementById('usersTable');
+ToggleUserToPremium.addEventListener('click', async (e) => {
+  e.preventDefault();
+  const element = e.target;
+  const userRole = element.getAttribute('data-role');
+  if (element.className === 'toggleUser') {
+    try {
+      await fetch(`/api/users/premium/${userRole}`, {
+        method: 'POST',
       });
       document.location.reload();
     } catch (error) {

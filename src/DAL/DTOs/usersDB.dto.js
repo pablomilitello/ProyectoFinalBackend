@@ -5,5 +5,6 @@ export default class UsersDB_DTO {
     this.email = user.email;
     this.cart = user.cart;
     this.role = user.role;
+    this.id = user._id;
   }
 }
