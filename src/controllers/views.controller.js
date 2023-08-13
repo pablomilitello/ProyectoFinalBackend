@@ -1,3 +1,4 @@
+import { cartManager } from '../DAL/DAOs/cartsDaos/CartsManagerMongo.js';
 import { productManager } from '../DAL/DAOs/productsDaos/ProductsManagerMongo.js';
 
 export const getHome = async (req, res, next) => {
@@ -41,4 +42,23 @@ export const getRealTimeProducts = async (req, res, next) => {
 
 export const getChat = async (req, res) => {
   res.render('chat');
+};
+
+export const getCart = async (req, res, next) => {
+  try {
+    const cart = await cartManager.findOneByIdPopulated(req.user.cart);
+    cart.products.forEach((item) => (item.total = item.quantity * item.product.price));
+    res.render('cart', {
+      cartId: req.user.cart,
+      cartItems: cart.products.map((item) => ({
+        productId: item.product._id,
+        title: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+      })),
+      cartTotal: cart.products.reduce((acc, curr) => (acc += curr.total), 0),
+    });
+  } catch (error) {
+    next(error);
+  }
 };

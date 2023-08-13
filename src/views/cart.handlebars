@@ -1,0 +1,48 @@
+{{#if cartItems.length}}
+  <h2 align='center'>Content of your cart</h2>
+
+  <table class='table' id='table' cellPadding='10' border='1' align='center' data-cart-id='{{cartId}}'>
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Increase</th>
+        <th>Decrease</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id='cartTable'>
+      {{#each cartItems}}
+        <tr>
+          <td>{{title}}</td>
+          <td>{{quantity}}</td>
+          <td>{{price}}</td>
+          <td align='center'><button
+              class='increase'
+              data-product-id='{{productId}}'
+              data-quantity='{{quantity}}'
+            >+</button></td>
+          <td align='center'><button
+              class='decrease'
+              data-product-id='{{productId}}'
+              data-quantity='{{quantity}}'
+            >-</button></td>
+          <td align='center'><button class='delete' data-product-id='{{productId}}'>Delete</button></td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan='5' align='center'>
+          <b>Cart Total $</b>
+          {{cartTotal}}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+{{else}}
+  <h2>Your cart is empty</h2>
+{{/if}}
+
+<script src='/js/cart.js'></script>

@@ -63,6 +63,11 @@ app.use('/api/sessions', sessionsRouter);
 app.use('/mockingproducts', mockingProductsRouter);
 app.use('/loggerTest', loggerTestRouter);
 
+//Redirect to login
+app.get('/', (req, res) => {
+  res.redirect('/register/login');
+});
+
 //Swagger
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
