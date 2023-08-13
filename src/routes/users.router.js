@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   adminManager,
   deleteInactiveUsers,
+  deleteUser,
   getAllUsers,
   togglePremium,
   uploadFiles,
@@ -16,5 +17,6 @@ router.get('/admin', authAdmin, adminManager);
 router.post('/premium/:uid', togglePremium);
 router.post('/:uid/documents', authOwnResource, uploader.array('files'), uploadFiles);
 router.delete('/', deleteInactiveUsers);
+router.delete('/:uid', deleteUser);
 
 export default router;

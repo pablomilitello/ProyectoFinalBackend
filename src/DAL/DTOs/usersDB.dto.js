@@ -1,3 +1,5 @@
+import { ROLE_ADMIN } from '../mongoDB/models/users.model.js';
+
 export default class UsersDB_DTO {
   constructor(user) {
     this.firstName = user.firstName;
@@ -6,5 +8,6 @@ export default class UsersDB_DTO {
     this.cart = user.cart;
     this.role = user.role;
     this.id = user._id;
+    this.isAdmin = user.role === ROLE_ADMIN;
   }
 }

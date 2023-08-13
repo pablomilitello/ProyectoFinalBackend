@@ -144,9 +144,10 @@ export const deleteInactiveUsers = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
+  const userId = req.params.uid;
   try {
-    const user = await userManager.findOneById(uid);
-    res.status(200).json(user);
+    await userManager.deleteOne(userId);
+    res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
     next(error);
   }

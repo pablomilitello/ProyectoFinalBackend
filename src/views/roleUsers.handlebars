@@ -2,7 +2,7 @@
 
 {{#if userDTOs.length}}
 
-  <table class='table' id='table' cellPadding='10' border='1' align='center'>
+  <table class='table1' id='table1' cellPadding='10' border='1' align='center'>
     <thead>
       <tr>
         <th>Name</th>
@@ -13,15 +13,17 @@
         <th>Toggle user</th>
       </tr>
     </thead>
-    <tbody id='usersTable'>
+    <tbody id='usersTable1'>
       {{#each userDTOs}}
         <tr>
           <td>{{firstName}}</td>
           <td>{{lastName}}</td>
           <td>{{email}}</td>
           <td>{{role}}</td>
-          <td><button class='delete' data-id='{{id}}'>Delete</button></td>
-          <td><button class='toggleUser' data-role='{{role}}'>Toggle user</button></td>
+          {{#unless isAdmin}}
+            <td><button class='delete' data-id='{{id}}'>Delete</button></td>
+            <td><button class='toggleUser' data-id='{{id}}'>Toggle user</button></td>
+          {{/unless}}
         </tr>
       {{/each}}
     </tbody>
@@ -30,4 +32,5 @@
   <h2>No users found</h2>
 {{/if}}
 
-<script src='/js/index.js'></script>
+<script src='/socket.io/socket.io.js'></script>
+<script src='/js/users.js'></script>
