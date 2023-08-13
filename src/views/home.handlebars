@@ -1,14 +1,27 @@
-{{#if products.length}}
-  <h2>List of existing products</h2>
-  <ul>
-    {{#each products}}
-      <li>#id: {{id}}</li>
-      <li>Product: {{title}}</li>
-      <li>Description: {{description}}</li>
-      <li>Price: ${{price}}</li>
-      <hr />
-    {{/each}}
-  </ul>
-{{else}}
-  <h2>Products not found</h2>
-{{/if}}
+<br />
+<br />
+<div style='text-align: center'>
+  <a href='/views/products'>Go to Product List</a>
+</div>
+<br />
+<br />
+<div style='text-align: center'>
+  <a href='/views/cart'>Go to Cart</a>
+</div>
+<br />
+<br />
+<div style='text-align: center'>
+  <a href='/views/manageproducts'>Manage Products</a>
+</div>
+<br />
+<br />
+<div style='text-align: center'>
+  <a href='/views/users'>Manage Users</a>
+</div>
+<br />
+<br />
+<div style='text-align: center'>
+  <form action='/register/logout' method='post'>
+    <button type='submit'>LOGOUT</button>
+  </form>
+</div>

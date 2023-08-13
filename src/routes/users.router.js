@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import {
-  adminManager,
   deleteInactiveUsers,
   deleteUser,
   getAllUsers,
@@ -8,12 +7,11 @@ import {
   uploadFiles,
 } from '../controllers/users.controller.js';
 import { uploader } from '../utils/utils.js';
-import { authAdmin, authOwnResource } from '../middlewares/auth.js';
+import { authOwnResource } from '../middlewares/auth.js';
 
 const router = Router();
 
 router.get('/', getAllUsers);
-router.get('/admin', authAdmin, adminManager);
 router.post('/premium/:uid', togglePremium);
 router.post('/:uid/documents', authOwnResource, uploader.array('files'), uploadFiles);
 router.delete('/', deleteInactiveUsers);

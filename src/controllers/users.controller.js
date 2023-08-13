@@ -30,7 +30,7 @@ export const passportRegister = (req, res) => {
 };
 
 export const passportLogin = (req, res) => {
-  res.redirect(`/views/realtimeproducts`);
+  res.redirect(`/views`);
 };
 
 export const passportLogout = (req, res) => {
@@ -41,7 +41,7 @@ export const passportLogout = (req, res) => {
 
 //Github
 export const githubAuthenticate = (req, res) => {
-  res.redirect('/views/realtimeproducts');
+  res.redirect('/views');
 };
 
 export const currentSession = (req, res) => {
