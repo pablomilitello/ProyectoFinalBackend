@@ -21,6 +21,11 @@ cartTable.addEventListener('click', async (e) => {
   } else if (element.className === 'increase') {
     try {
       const quantity = parseInt(element.getAttribute('data-quantity'));
+      const stock = parseInt(element.getAttribute('data-stock'));
+      if (quantity + 1 > stock) {
+        alert('Not enough stock');
+        return;
+      }
       const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
