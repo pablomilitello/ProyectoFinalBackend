@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   addProducts,
   deleteProducts,
-  deleteProductsById,
+  deleteProductById,
   getProductById,
   getProducts,
   updateProduct,
@@ -16,7 +16,7 @@ router.get('/', getProducts);
 router.get('/:pid', getProductById);
 router.post('/', authRoles([ROLE_ADMIN, ROLE_PREMIUM]), addProducts);
 router.put('/:pid', authProductOwnerOrAdmin, updateProduct);
-router.delete('/:pid', authProductOwnerOrAdmin, deleteProductsById);
+router.delete('/:pid', authProductOwnerOrAdmin, deleteProductById);
 router.delete('/', authAdmin, deleteProducts);
 
 export default router;

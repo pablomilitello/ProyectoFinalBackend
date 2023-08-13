@@ -1,3 +1,5 @@
+import { userManager } from '../DAL/DAOs/usersDaos/UsersManagerMongo.js';
+import { ROLE_PREMIUM } from '../DAL/mongoDB/models/users.model.js';
 import CustomError from '../services/errors/CustomError.js';
 import { ErrorMessage } from '../services/errors/error.enum.js';
 import {
@@ -8,6 +10,7 @@ import {
   findProductById,
   updateOneProduct,
 } from '../services/products.services.js';
+import { transporter } from '../utils/nodemailer.js';
 import { validateBoolean, validateInteger, validateSort } from '../utils/utils.js';
 
 export const getProducts = async (req, res, next) => {
@@ -145,10 +148,31 @@ export const deleteProducts = async (req, res, next) => {
   }
 };
 
-export const deleteProductsById = async (req, res, next) => {
+export const deleteProductById = async (req, res, next) => {
   try {
     const { pid } = req.params;
+    const product = await findProductById(pid);
+    if (!product) {
+      CustomError.createCustomError({
+        message: ErrorMessage.PRODUCT_NOT_FOUND,
+        status: 404,
+      });
+    }
     const products = await deleteOneProduct(pid);
+    const user = await userManager.findByEmail(product.owner);
+    if (user && user.role === ROLE_PREMIUM) {
+      const mail = {
+        from: 'coderhousemailer@gmail.com',
+        to: user.email,
+        subject: 'Product deleted',
+        text: `Product deleted: ${product.title}, id: ${product.id}`,
+      };
+      transporter.sendMail(mail, (err, info) => {
+        if (err) {
+          logger.error(err);
+        }
+      });
+    }
     res.status(200).json({ products });
   } catch (error) {
     next(error);
