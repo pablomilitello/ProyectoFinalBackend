@@ -19,6 +19,7 @@ export const getProducts = async (req, res, next) => {
       prevPage: products.prevPage,
       hasNextPage: products.hasNextPage,
       hasPrevPage: products.hasPrevPage,
+      cartId: req.user.cart,
     });
   } catch (error) {
     next(error);

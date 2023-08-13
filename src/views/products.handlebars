@@ -1,14 +1,14 @@
 {{#if products.length}}
   <h2 align='center'>Paginated list of existing products</h2>
 
-  <table class='table' id='table' cellPadding='10' border='1' align='center'>
+  <table class='table' id='table' cellPadding='10' border='1' align='center' data-cart-id='{{cartId}}'>
     <thead>
       <tr>
         <th>#id</th>
         <th>Product</th>
         <th>Description</th>
         <th>Price</th>
-        <th>Delete</th>
+        <th>Add to Cart</th>
       </tr>
     </thead>
     <tbody id='productsTable'>
@@ -40,4 +40,4 @@
 {{/if}}
 
 <script src='/socket.io/socket.io.js'></script>
-<script src='/js/index.js'></script>
+<script src='/js/products.js'></script>
