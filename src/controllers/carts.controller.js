@@ -11,6 +11,7 @@ import {
 } from '../services/carts.services.js';
 import CustomError from '../services/errors/CustomError.js';
 import { ErrorMessage } from '../services/errors/error.enum.js';
+import { transporter } from '../utils/nodemailer.js';
 
 export const getCartByIdPopulated = async (req, res, next) => {
   try {
@@ -148,6 +149,24 @@ export const purchase = async (req, res, next) => {
       });
     }
     const result = await purchaseCart(cart, req.user);
+
+    const mail = {
+      from: 'coderhousemailer@gmail.com',
+      to: req.user.email,
+      subject: 'Purchase succesfuly',
+      context: {
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        cart: result,
+      },
+      template: 'purchase',
+    };
+    transporter.sendMail(mail, (err, info) => {
+      if (err) {
+        logger.error(err);
+      }
+    });
+
     res.status(200).json(result);
   } catch (error) {
     next(error);
