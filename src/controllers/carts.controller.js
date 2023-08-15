@@ -149,16 +149,11 @@ export const purchase = async (req, res, next) => {
       });
     }
     const result = await purchaseCart(cart, req.user);
-
     const mail = {
       from: 'coderhousemailer@gmail.com',
       to: req.user.email,
       subject: 'Purchase succesfuly',
-      context: {
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        cart: result,
-      },
+      text: `${req.user.firstName} ${req.user.lastName} your purchase was succesfuly. Your ID: ${result.ticket.code}. Total Price: ${result.ticket.amount}`,
       template: 'purchase',
     };
     transporter.sendMail(mail, (err, info) => {
